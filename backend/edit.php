@@ -1,4 +1,9 @@
 <?php 
+   session_start();
+   if (!isset($_SESSION["login"])) {
+      header("Location: ../login.php");
+      exit;
+   }
    require "../server/base.php";
    $id = $_GET["id"];
    $article = query("SELECT * FROM posts WHERE id = $id")[0];
@@ -24,13 +29,10 @@
 <!-- * content -->
       <form action="" method="POST" enctype="multipart/form-data">
          <input type="hidden" name="id" value="<?= $article["id"]; ?>">
+         <input type="hidden" name="created_at" value="<?= $article["created_at"]; ?>">
          <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" name="title" value="<?= $article["title"]; ?>">
-         </div>
-         <div class="mb-3">
-            <label for="slug" class="form-label">Slug</label>
-            <input type="text" class="form-control" id="slug" name="slug" value="<?= $article["slug"]; ?>">
          </div>
          <div class="mb-3">
             <label for="description" class="form-label">Description</label>

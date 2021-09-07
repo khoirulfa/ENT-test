@@ -1,4 +1,9 @@
-<?php 
+<?php
+   session_start();
+   if (!isset($_SESSION["login"])) {
+      header("Location: ../login.php");
+      exit;
+   }
    require "../server/base.php";
 
    if(isset($_POST["submit"])) {
@@ -6,7 +11,8 @@
          echo "<script>alert('Post baru telah dibuat')</script>";
          echo "<script>document.location.href = 'dashboard.php'</script>?";
       } else {
-         echo "<script>alert('Post baru gagal dibuat <br>". mysqli_error($connection). "'); document.location.href = 'dashboard.php'</script>";
+         // echo "<script>alert('Post baru gagal dibuat <br>". mysqli_error($connection). "'); document.location.href = 'dashboard.php'</script>";
+         echo mysqli_error($connection);
       }
    }
 ?>
@@ -26,16 +32,12 @@
             <input type="text" class="form-control" id="title" name="title">
          </div>
          <div class="mb-3">
-            <label for="slug" class="form-label">Slug</label>
-            <input type="text" class="form-control" id="slug" name="slug">
-         </div>
-         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <input type="text" class="form-control" id="description" name="description">
          </div>
          <div class="mb-3">
             <label class="form-label" for="body">Body</label>
-            <textarea name="body" id="" cols="30" rows="10" id="body" class="form-control"></textarea>
+            <textarea name="body" id="" cols="30" rows="10" id="mytextarea" class="form-control"></textarea>
          </div>
          <a href="./dashboard.php" class="btn border-secondary">Back</a>
          <button type="submit" class="btn btn-primary" name="submit">Submit</button>

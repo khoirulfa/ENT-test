@@ -1,5 +1,10 @@
 <?php 
-require "../server/base.php";
+session_start();
+if (!isset($_SESSION["login"])) {
+	header("Location: ../login.php");
+	exit;
+}
+require "../server/base.php"; 
 
 $articles = query("SELECT * FROM posts");
 ?>
@@ -18,9 +23,11 @@ $articles = query("SELECT * FROM posts");
 		<div class="row">
 			<div class="col-2">
 				<ul class="list-group">
-					<li class="list-group-item">Posts</li>
-					<li class="list-group-item bg-secondary">
-						<a href="../index.php" class="text-decoration-none text-white">Home</a>	
+					<li class="list-group-item">
+						<a href="../index.php" class="text-decoration-none text-dark">Home</a>	
+					</li>
+					<li class="list-group-item bg-danger">
+						<a href="../logout.php" class="text-decoration-none text-white">Logout</a>	
 					</li>
 				</ul>
 			</div>
@@ -47,7 +54,8 @@ $articles = query("SELECT * FROM posts");
 								<td class="btn-group" role="group">
 									<a href="detail.php?id=<?= $article['id']; ?>" class="btn btn-sm btn-secondary">detail</a>
 									<a href="edit.php?id=<?= $article["id"]; ?>" class="btn btn-sm btn-warning">edit</a>
-									<a href="delete.php?id=<?= $article['id']; ?>" class="btn btn-sm btn-danger">delete</a>
+									<a href="delete.php?id=<?= $article['id']; ?>" class="btn btn-sm btn-danger"
+									 onclick="return confirm('Yakin ingin dihapus?')">delete</a>
 								</td>
 							</tr>
 						<?php $i++; endforeach; ?>
