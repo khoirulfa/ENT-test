@@ -11,8 +11,7 @@
          echo "<script>alert('Post baru telah dibuat')</script>";
          echo "<script>document.location.href = 'dashboard.php'</script>?";
       } else {
-         // echo "<script>alert('Post baru gagal dibuat <br>". mysqli_error($connection). "'); document.location.href = 'dashboard.php'</script>";
-         echo mysqli_error($connection);
+         echo "<script>alert('Post baru gagal dibuat'); document.location.href = 'dashboard.php'</script>";
       }
    }
 ?>
@@ -38,6 +37,10 @@
          <div class="mb-3">
             <label class="form-label" for="body">Body</label>
             <textarea name="body" id="" cols="30" rows="10" id="mytextarea" class="form-control"></textarea>
+         </div>
+         <div class="mb-3">
+            <label class="form-label" for="body">Thumbnail</label>
+            <input name="thumbnail" type="file" class="form-control">
          </div>
          <a href="./dashboard.php" class="btn border-secondary">Back</a>
          <button type="submit" class="btn btn-primary" name="submit">Submit</button>

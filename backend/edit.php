@@ -30,6 +30,7 @@
       <form action="" method="POST" enctype="multipart/form-data">
          <input type="hidden" name="id" value="<?= $article["id"]; ?>">
          <input type="hidden" name="created_at" value="<?= $article["created_at"]; ?>">
+         <input type="hidden" name="thumbLama" value="<?= $article["thumbnail"]; ?>">
          <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" name="title" value="<?= $article["title"]; ?>">
@@ -41,6 +42,11 @@
          <div class="mb-3">
             <label class="form-label" for="body">Body</label>
             <textarea name="body" id="" cols="30" rows="10" id="body" class="form-control"><?= $article["body"]; ?></textarea>
+         </div>
+         <div class="mb-3">
+            <img src="../img/<?= $article['thumbnail']; ?>" alt="" width="70px" class="img-thumbnail">
+            <label class="form-label" for="body">Thumbnail</label>
+            <input name="thumbnail" type="file" class="form-control">
          </div>
          <a href="./dashboard.php" class="btn border-secondary">Back</a>
          <button type="submit" class="btn btn-primary" name="submit">Submit</button>

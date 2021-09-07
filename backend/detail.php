@@ -17,7 +17,7 @@
    <title><?= $article['title']; ?></title>
 </head>
 <body>
-   <div class="container">
+   <div class="container mt-4">
       <!-- * content -->
       <article>
          <div class="card">
@@ -32,6 +32,7 @@
                </figure>
                <h6 class="text-muted"><?= $article['created_at']; ?></h6>
                <div class="divider"></div>
+               <img src="../img/<?= $article["thumbnail"]; ?>" alt="" class="img-thumbnail" style="max-width: 500px;">
                <article><?= $article['body']; ?></article>
             </div>
          </div>

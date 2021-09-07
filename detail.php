@@ -12,7 +12,7 @@
    <title><?= $article['title']; ?></title>
 </head>
 <body>
-   <div class="container">
+   <div class="container mb-5">
       <header
          class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
          <a href="index.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
@@ -42,6 +42,7 @@
                </figure>
                <h6 class="text-muted"><?= $article['created_at']; ?></h6>
                <div class="divider"></div>
+               <img src="img/<?= $article["thumbnail"]; ?>" alt="" class="img-thumbnail" style="max-width: 500px;">
                <article><?= $article['body']; ?></article>
             </div>
          </div>
