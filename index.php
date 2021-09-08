@@ -4,6 +4,9 @@ require "server/base.php";
 
 $articles = query("SELECT * FROM posts");
 
+if ( isset($_POST["search"]) ) {
+	$articles = search($_POST["keyword"]);
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -15,25 +18,32 @@ $articles = query("SELECT * FROM posts");
 
 <body">
    <div class="container mb-5">
-      <header
-         class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-         <a href="index.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-            <img src="assets/logo.png" class="bi me-2" width="40" role="img">
-         </a>
+      <header class="p-3 border border-top-0 border-start-0 border-end-0 mb-4">
+         <div class="container">
+            <div class="d-flex align-items-center justify-content-between justify-content-lg-between">
+               <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                  <img src="assets/logo.png" alt="" class="bi me-2" width="40" role="img">
+               </a>
 
-         <div class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            My blog
-         </div>
+               <div class="d-flex">
+                  <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="POST">
+                     <div class="input-group">
+                        <input type="text" class="form-control form-control-dark" id="keyword" placeholder="Search..." name="keyword" autocomplete="off" autofocus>
+                        <button type="submit" name="search" class="btn btn-secondary d-inline">Cari</button>
+                     </div>
+                  </form>
 
-         
-         <div class="col-md-3 text-end">
-            <?php if(isset($_SESSION["login"])) {
-               echo '<a href="backend/dashboard.php" type="button" class="btn btn-primary me-1">Dashboard</a>';
-            } else {
-               echo '<a href="register.php" type="button" class="btn btn-outline-primary me-1">Register</a>';
-               echo '<a href="login.php" type="button" class="btn btn-primary me-1">Login</a>';
-            }
-            ?>
+                  <div class="text-end">
+                     <?php if(isset($_SESSION["login"])) {
+                        echo '<a href="backend/dashboard.php" type="button" class="btn btn-primary me-1">Dashboard</a>';
+                     } else {
+                        echo '<a href="register.php" type="button" class="btn btn-outline-primary me-1">Register</a>';
+                        echo '<a href="login.php" type="button" class="btn btn-primary me-1">Login</a>';
+                     }
+                     ?>
+                  </div>
+               </div>
+            </div>
          </div>
       </header>
 
