@@ -156,3 +156,12 @@ function uploadGambar () {
 
     return $fileName;
 } 
+
+function search($keyword) {
+    $query = "SELECT * FROM posts WHERE
+            title LIKE '%$keyword%' OR
+            description LIKE '%$keyword%' OR
+            body LIKE '%$keyword%'
+            ";
+        return query($query);
+}
