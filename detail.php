@@ -2,7 +2,7 @@
    require "server/base.php";
    $slug = $_GET['slug'];
 
-   $article = query("SELECT * FROM posts WHERE slug = '$slug'")[0];
+   $article = query("SELECT * FROM posts INNER JOIN categories ON posts.category_id = categories.id WHERE slug = '$slug'")[0];
 ?>
 <!doctype html>
 <html lang="en">
@@ -33,6 +33,7 @@
          <div class="card">
             <div class="card-body">
                <figure>
+                  <span>&mdash; <?= $article['category_title']; ?></span>
                   <blockquote class="blockquote">
                      <h4 class="fw-bold"><?= $article['title']; ?></h4>
                   </blockquote>

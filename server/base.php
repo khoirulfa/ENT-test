@@ -48,9 +48,10 @@ function register($data) {
 function create($data) {
    global $connection;
    $title = htmlspecialchars($data["title"]);
-   $slug = htmlspecialchars(strtolower($data["title"]));
+   $slug = slugGenerator($data["title"], 5);
    $description = htmlspecialchars($data["description"]);
    $body = $data["body"];
+   $category = $data["category"];
    $datetime = date("Y-m-d h:i:s");
 
    $img = uploadGambar();
@@ -69,7 +70,7 @@ function create($data) {
     }
 
    mysqli_query($connection, "INSERT INTO posts VALUES 
-        ('', '$title', '$slug', '$description', '$body', '$img', '$datetime', '')
+        ('', '$title', '$slug', '$description', '$body', '$category', '$img', '$datetime', '')
     ");
 
    return mysqli_affected_rows($connection);
@@ -79,7 +80,7 @@ function update($data) {
    global $connection;
    $id = $data["id"];
    $title = htmlspecialchars($data["title"]);
-   $slug = htmlspecialchars(strtolower($data["title"]));
+   $slug = slugGenerator($data["title"], 5);
    $description = htmlspecialchars($data["description"]);
    $body = $data["body"];
    $datetime = $data["created_at"];
@@ -165,3 +166,17 @@ function search($keyword) {
             ";
         return query($query);
 }
+
+function slugGenerator($string, $limit = null)
+  {     
+      $words = explode(' ', $string);
+      if (count($words) > $limit) {
+        $rawSlug = implode(' ', array_slice($words, 0, $limit)) ;
+        $slug = preg_replace('/[^a-z0-9]+/i', '-', trim(strtolower($rawSlug)));
+        return $slug;
+    } else {
+        $rawSlug = implode(' ', array_slice($words, 0, $limit)) ;
+        $slug = preg_replace('/[^a-z0-9]+/i', '-', trim(strtolower($rawSlug)));
+          return $slug;
+      }
+  }

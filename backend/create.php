@@ -6,6 +6,8 @@
    }
    require "../server/base.php";
 
+   $categories = mysqli_query($connection, "SELECT * FROM categories");
+
    if(isset($_POST["submit"])) {
       if(create($_POST) > 0) {
          echo "<script>alert('Post baru telah dibuat')</script>";
@@ -38,6 +40,15 @@
          <div class="mb-3">
             <label class="form-label" for="body">Body</label>
             <textarea name="body" id="" cols="30" rows="10" id="mytextarea" class="form-control"></textarea>
+         </div>
+         <div class="mb-3">
+            <label class="form-label" for="inputGroupSelect01">Category</label>
+            <select class="form-select" id="inputGroupSelect01" name="category">
+               <option selected>Choose...</option>
+               <?php foreach ($categories as $category) : ?>
+                  <option value="<?= $category["id"]; ?>"><?= $category["title"]; ?></option>
+               <?php endforeach; ?>
+            </select>
          </div>
          <div class="mb-3">
             <label class="form-label" for="body">Thumbnail</label>

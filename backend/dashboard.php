@@ -6,11 +6,6 @@ if (!isset($_SESSION["login"])) {
 }
 require "../server/base.php"; 
 
-$articles = query("SELECT * FROM posts");
-
-if ( isset($_POST["search"]) ) {
-	$articles = search($_POST["keyword"]);
-}
 ?>
 <!doctype html>
 <html lang="en">
@@ -54,36 +49,74 @@ if ( isset($_POST["search"]) ) {
 						<a href="create.php" class="btn btn-block btn-primary">Add new post</a>
 					</div>
 				</div>
-				<div id="table">
-					<table class="table">
-						<thead>
+				<table class="table">
+					<thead>
+						<tr>
+							<td>#</td>
+							<td>Title</td>
+							<td>Category</td>
+							<td>Description</td>
+							<td>Action</td>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+						$limit = 10;
+						$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+						$firstPage = ($page > 1) ? ($page * $limit) : 0;
+
+						$previous = $page - 1;
+						$next = $page + 1;
+						
+						$counter = mysqli_num_rows(mysqli_query($connection, "SELECT * FROM posts"));
+						$pages = ceil($counter / $limit);
+
+						$articles = mysqli_query($connection, "SELECT * FROM posts LIMIT $firstPage, $limit");
+						$i = $firstPage + 1; 
+
+						if ( isset($_POST["search"]) ) {
+							$articles = search($_POST["keyword"]);
+						}
+						?>
+						<?php foreach ($articles as $article) : ?>
 							<tr>
-								<td>#</td>
-								<td>Title</td>
-								<td>Slug</td>
-								<td>Description</td>
-								<td>Action</td>
+								<td><?= $i; ?></td>
+								<td><?= $article['title']; ?></td>
+								<td><?= $article['category_title']; ?></td>
+								<td><?= $article['description']; ?></td>
+								<td class="btn-group" role="group">
+									<a href="detail.php?id=<?= $article['id']; ?>" class="btn btn-sm btn-secondary">detail</a>
+									<a href="edit.php?id=<?= $article["id"]; ?>" class="btn btn-sm btn-warning">edit</a>
+									<a href="delete.php?id=<?= $article['id']; ?>" class="btn btn-sm btn-danger"
+									onclick="return confirm('Yakin ingin dihapus?')">delete</a>
+								</td>
 							</tr>
-						</thead>
-						<tbody>
-							<?php $i = 1 ?>
-							<?php foreach ($articles as $article) : ?>
-								<tr>
-									<td><?= $i; ?></td>
-									<td><?= $article['title']; ?></td>
-									<td><?= $article['slug']; ?></td>
-									<td><?= $article['description']; ?></td>
-									<td class="btn-group" role="group">
-										<a href="detail.php?id=<?= $article['id']; ?>" class="btn btn-sm btn-secondary">detail</a>
-										<a href="edit.php?id=<?= $article["id"]; ?>" class="btn btn-sm btn-warning">edit</a>
-										<a href="delete.php?id=<?= $article['id']; ?>" class="btn btn-sm btn-danger"
-										onclick="return confirm('Yakin ingin dihapus?')">delete</a>
-									</td>
-								</tr>
-							<?php $i++; endforeach; ?>
-						</tbody>
-					</table>
-				</div>
+						<?php $i++; endforeach; ?>
+					</tbody>
+				</table>
+				<nav class="mt-3">
+					<ul class="pagination justify-content-center">
+						<?php if($page > 1) : ?>
+							<li class="page-item">
+								<a class="page-link" href="?page=<?= $previous; ?>">Previous</a>
+							</li>
+						<?php endif; ?>
+
+						<?php 
+						for($x = 1; $x <= $pages ; $x++){
+							?> 
+							<li class="page-item"><a class="page-link" href="?page=<?php echo $x ?>"><?php echo $x; ?></a></li>
+							<?php
+						}
+						?>
+
+						<?php if($page < $pages) : ?>
+							<li class="page-item">
+								<a class="page-link" href="?page=<?= $next; ?>">Next</a>
+							</li>
+						<?php endif; ?>
+					</ul>
+				</nav>
 			</div>
 		</div>
 	</div>

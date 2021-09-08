@@ -2,7 +2,7 @@
 session_start();
 require "server/base.php";
 
-$articles = query("SELECT * FROM posts");
+$articles = query("SELECT * FROM posts INNER JOIN categories ON posts.category_id = categories.id");
 
 if ( isset($_POST["search"]) ) {
 	$articles = search($_POST["keyword"]);
@@ -50,7 +50,8 @@ if ( isset($_POST["search"]) ) {
       <div class="container mt-2">
          <?php foreach ($articles as $article) : ?>
             <div class="mb-2">
-            <h4 ><?= $article['title']; ?></h4>
+            <span>&mdash; <?= $article['category_title']; ?></span>
+            <h4 class="fw-bold"><?= $article['title']; ?></h4>
                <div class="">
                   <h5 class=""><?= $article['description']; ?></h5>
                   <p class=""><?= htmlspecialchars_decode($article['body']); ?></p>
