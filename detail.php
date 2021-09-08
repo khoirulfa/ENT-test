@@ -2,7 +2,7 @@
    require "server/base.php";
    $slug = $_GET['slug'];
 
-   $article = query("SELECT * FROM posts INNER JOIN categories ON posts.category_id = categories.id WHERE slug = '$slug'")[0];
+   $article = query("SELECT * FROM posts INNER JOIN categories ON posts.category_id = categories.id INNER JOIN users ON posts.user_id = users.id WHERE slug = '$slug'")[0];
 ?>
 <!doctype html>
 <html lang="en">

@@ -86,7 +86,7 @@ require "../server/base.php";
 								<td style="max-width: 400px;"><?= $article['description']; ?></td>
 								<td class="btn-group" role="group">
 									<a href="detail.php?id=<?= $article['id']; ?>" class="btn btn-sm btn-secondary">detail</a>
-									<a href="edit.php?id=<?= $article["id"]; ?>" class="btn btn-sm btn-warning">edit</a>
+									<a href="edit.php?id=<?= $article['id']; ?>" class="btn btn-sm btn-warning">edit</a>
 									<a href="delete.php?id=<?= $article['id']; ?>" class="btn btn-sm btn-danger"
 									onclick="return confirm('Yakin ingin dihapus?')">delete</a>
 								</td>

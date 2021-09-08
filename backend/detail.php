@@ -8,6 +8,7 @@
    $id = $_GET['id'];
 
    $article = query("SELECT * FROM posts WHERE id = $id")[0];
+   var_dump($article);
 ?>
 <!doctype html>
 <html lang="en">
