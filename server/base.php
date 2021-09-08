@@ -159,7 +159,7 @@ function uploadGambar () {
 } 
 
 function search($keyword) {
-    $query = "SELECT * FROM posts WHERE
+    $query = "SELECT * FROM posts INNER JOIN categories ON posts.category_id = categories.id WHERE
             title LIKE '%$keyword%' OR
             description LIKE '%$keyword%' OR
             body LIKE '%$keyword%'
