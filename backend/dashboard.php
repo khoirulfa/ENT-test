@@ -71,7 +71,7 @@ require "../server/base.php";
 						$counter = mysqli_num_rows(mysqli_query($connection, "SELECT * FROM posts"));
 						$pages = ceil($counter / $limit);
 
-						$articles = mysqli_query($connection, "SELECT * FROM posts LIMIT $firstPage, $limit");
+						$articles = mysqli_query($connection, "SELECT * FROM posts INNER JOIN categories ON posts.category_id = categories.id LIMIT $firstPage, $limit");
 						$i = $firstPage + 1; 
 
 						if ( isset($_POST["search"]) ) {
@@ -81,9 +81,9 @@ require "../server/base.php";
 						<?php foreach ($articles as $article) : ?>
 							<tr>
 								<td><?= $i; ?></td>
-								<td><?= $article['title']; ?></td>
+								<td style="max-width: 400px;"><?= $article['title']; ?></td>
 								<td><?= $article['category_title']; ?></td>
-								<td><?= $article['description']; ?></td>
+								<td style="max-width: 400px;"><?= $article['description']; ?></td>
 								<td class="btn-group" role="group">
 									<a href="detail.php?id=<?= $article['id']; ?>" class="btn btn-sm btn-secondary">detail</a>
 									<a href="edit.php?id=<?= $article["id"]; ?>" class="btn btn-sm btn-warning">edit</a>
