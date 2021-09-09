@@ -14,42 +14,46 @@
 </head>
 <body>
    <div class="container mb-5">
-      <header
-         class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-         <a href="index.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-            <img src="assets/logo.png" class="bi me-2" width="40" role="img">
-         </a>
-   
-         <div class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            My blog
-         </div>
-   
+      <div class="row">
+         <div class="col-sm-12">
+            <header
+               class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+               <a href="index.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                  <img src="assets/logo.png" class="bi me-2" width="40" role="img">
+               </a>
          
-         <div class="col-md-3 text-end">
-         </div>
-      </header>
+               <div class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                  My blog
+               </div>
+         
+               
+               <div class="col-md-3 text-end">
+               </div>
+            </header>
 
-      <!-- * content -->
-      <article>
-         <div class="card">
-            <div class="card-body">
-               <figure>
-                  <span>&mdash; <?= $article['category_title']; ?></span>
-                  <span class="fw-bold">&mdash; Penulis : <?= $article['name']; ?></span>
-                  <blockquote class="blockquote">
-                     <h2 class="fw-bold"><?= $article['title']; ?></h2>
-                  </blockquote>
-                  <figcaption class="blockquote-footer">
-                     <?= $article['description']; ?>
-                  </figcaption>
-               </figure>
-               <h6 class="text-muted"><?= $article['created_at']; ?></h6>
-               <div class="divider"></div>
-               <img src="img/<?= $article["thumbnail"]; ?>" alt="" class="img-thumbnail" style="max-width: 500px;">
-               <article><?= $article['body']; ?></article>
-            </div>
+            <!-- * content -->
+            <article>
+               <div class="card">
+                  <div class="card-body">
+                     <figure>
+                        <span>&mdash; <?= $article['category_title']; ?></span>
+                        <span class="fw-bold">&mdash; Penulis : <?= $article['name']; ?></span>
+                        <blockquote class="blockquote">
+                           <h2 class="fw-bold"><?= $article['title']; ?></h2>
+                        </blockquote>
+                        <figcaption class="blockquote-footer">
+                           <?= $article['description']; ?>
+                        </figcaption>
+                     </figure>
+                     <h6 class="text-muted"><?= $article['created_at']; ?></h6>
+                     <div class="divider"></div>
+                     <img src="img/<?= $article["thumbnail"]; ?>" alt="" class="img-thumbnail" style="max-width: 500px;">
+                     <article><?= $article['body']; ?></article>
+                  </div>
+               </div>
+            </article>
          </div>
-      </article>
+      </div>
    </div>
 
    <footer class="fixed-bottom mt-auto py-3 bg-light">
