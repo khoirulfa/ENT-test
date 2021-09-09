@@ -7,8 +7,8 @@
    require "../server/base.php";
    $id = $_GET['id'];
 
-   $article = query("SELECT * FROM posts WHERE id = $id")[0];
-   var_dump($article);
+   $article = query("SELECT * FROM posts INNER JOIN categories ON posts.category_id = categories.id INNER JOIN users ON posts.user_id = users.id WHERE posts.id = $id")[0];
+   // var_dump($article);
 ?>
 <!doctype html>
 <html lang="en">

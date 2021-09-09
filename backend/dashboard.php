@@ -71,7 +71,7 @@ require "../server/base.php";
 						$counter = mysqli_num_rows(mysqli_query($connection, "SELECT * FROM posts"));
 						$pages = ceil($counter / $limit);
 
-						$articles = mysqli_query($connection, "SELECT * FROM posts INNER JOIN categories ON posts.category_id = categories.id LIMIT $firstPage, $limit");
+						$articles = query("SELECT post.id, post.title, post.description, categories.category_title FROM posts AS post INNER JOIN categories ON post.category_id = categories.id INNER JOIN users ON post.user_id = users.id WHERE post.id");
 						$i = $firstPage + 1; 
 
 						if ( isset($_POST["search"]) ) {

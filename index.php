@@ -2,8 +2,6 @@
 session_start();
 require "server/base.php";
 
-$articles = query("SELECT * FROM posts INNER JOIN categories ON posts.category_id = categories.id INNER JOIN users ON posts.user_id = users.id");
-
 if ( isset($_POST["search"]) ) {
 	$articles = search($_POST["keyword"]);
 }
@@ -47,11 +45,16 @@ if ( isset($_POST["search"]) ) {
          </div>
       </header>
 
-      <div class="container mt-2">
-         <?php foreach ($articles as $article) : ?>
+      <div class="container mt-2 mb-5">
+         <?php 
+         $limit = 5;
+
+         $articles = query("SELECT * FROM posts INNER JOIN categories ON posts.category_id = categories.id INNER JOIN users ON posts.user_id = users.id LIMIT $limit");
+
+         foreach ($articles as $article) : ?>
             <div class="mb-2">
             <span>&mdash; <?= $article['category_title']; ?></span>
-            <span>&mdash; <?= $article['name']; ?></span>
+            <span class="fw-bold">&mdash; <?= $article['name']; ?></span>
             <h4 class="fw-bold"><?= $article['title']; ?></h4>
                <div class="">
                   <h5 class=""><?= $article['description']; ?></h5>
@@ -61,6 +64,7 @@ if ( isset($_POST["search"]) ) {
                </div>
             </div>
          <?php endforeach; ?>
+         <button class="btn btn-success mx-auto mb-4" name="show-more">Show more</button>
       </div>
    </div>
    <footer class="fixed-bottom mt-5 py-3 bg-light">

@@ -34,6 +34,7 @@
             <div class="card-body">
                <figure>
                   <span>&mdash; <?= $article['category_title']; ?></span>
+                  <span>&mdash; <?= $article['name']; ?></span>
                   <blockquote class="blockquote">
                      <h4 class="fw-bold"><?= $article['title']; ?></h4>
                   </blockquote>
