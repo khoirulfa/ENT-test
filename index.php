@@ -1,21 +1,18 @@
 <?php 
 session_start();
 require "server/base.php";
-
-if ( isset($_POST["search"]) ) {
-	$articles = search($_POST["keyword"]);
-}
 ?>
 <!doctype html>
 <html lang="en">
 <head>
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   <link rel="stylesheet" href="assets/style.css">
    <title>Home</title>
 </head>
 
 <body">
-   <div class="container mb-5">
+   <div class="container mb-5 pb-5">
       <header class="p-3 border border-top-0 border-start-0 border-end-0 mb-4">
          <div class="container">
             <div class="d-flex align-items-center justify-content-between justify-content-lg-between">
@@ -48,23 +45,58 @@ if ( isset($_POST["search"]) ) {
       <div class="container mt-2 mb-5">
          <?php 
          $limit = 5;
+         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+         $firstPage = ($page > 1) ? ($page * $limit) - $limit : 0;
 
-         $articles = query("SELECT * FROM posts INNER JOIN categories ON posts.category_id = categories.id INNER JOIN users ON posts.user_id = users.id LIMIT $limit");
+         $previous = $page - 1;
+         $next = $page + 1;
+         
+         $counter = mysqli_num_rows(mysqli_query($connection, "SELECT * FROM posts"));
+         $pages = ceil($counter / $limit);
+
+         $articles = query("SELECT post.slug, post.title, post.description, post.body, categories.category_title, users.name FROM posts AS post INNER JOIN categories ON post.category_id = categories.id INNER JOIN users ON post.user_id = users.id WHERE post.id LIMIT $firstPage, $limit");
+         $i = $firstPage + 1; 
+         
+         if ( isset($_POST["search"]) ) {
+            $articles = search($_POST["keyword"]);
+         }
 
          foreach ($articles as $article) : ?>
             <div class="mb-2">
             <span>&mdash; <?= $article['category_title']; ?></span>
-            <span class="fw-bold">&mdash; <?= $article['name']; ?></span>
-            <h4 class="fw-bold"><?= $article['title']; ?></h4>
+            <span class="fw-bold">&mdash; Penulis : <?= $article['name']; ?></span>
+            <h2 class="fw-bold"><?= $article['title']; ?></h2>
                <div class="">
-                  <h5 class=""><?= $article['description']; ?></h5>
+                  <h6 class="text-muted"><?= $article['description']; ?></h6>
                   <p class=""><?= htmlspecialchars_decode($article['body']); ?></p>
                   <a href="detail.php?slug=<?= $article['slug']; ?>" class="btn btn-primary">View more</a>
                   <hr>
                </div>
             </div>
          <?php endforeach; ?>
-         <button class="btn btn-success mx-auto mb-4" name="show-more">Show more</button>
+         <nav class="mt-3 mb-5">
+            <ul class="pagination justify-content-center">
+               <?php if($page > 1) : ?>
+                  <li class="page-item">
+                     <a class="page-link" href="?page=<?= $previous; ?>">Previous</a>
+                  </li>
+               <?php endif; ?>
+
+               <?php 
+               for($x = 1; $x <= $pages ; $x++){
+                  ?> 
+                  <li class="page-item"><a class="page-link" href="?page=<?php echo $x ?>"><?php echo $x; ?></a></li>
+                  <?php
+               }
+               ?>
+
+               <?php if($page < $pages) : ?>
+                  <li class="page-item">
+                     <a class="page-link" href="?page=<?= $next; ?>">Next</a>
+                  </li>
+               <?php endif; ?>
+            </ul>
+         </nav>
       </div>
    </div>
    <footer class="fixed-bottom mt-5 py-3 bg-light">

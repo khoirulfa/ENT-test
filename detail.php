@@ -9,6 +9,7 @@
 <head>
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/style.css">
    <title><?= $article['title']; ?></title>
 </head>
 <body>
@@ -34,9 +35,9 @@
             <div class="card-body">
                <figure>
                   <span>&mdash; <?= $article['category_title']; ?></span>
-                  <span>&mdash; <?= $article['name']; ?></span>
+                  <span class="fw-bold">&mdash; Penulis : <?= $article['name']; ?></span>
                   <blockquote class="blockquote">
-                     <h4 class="fw-bold"><?= $article['title']; ?></h4>
+                     <h2 class="fw-bold"><?= $article['title']; ?></h2>
                   </blockquote>
                   <figcaption class="blockquote-footer">
                      <?= $article['description']; ?>
