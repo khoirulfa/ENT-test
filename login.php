@@ -21,6 +21,7 @@ if(isset($_POST["login"])) {
       if ( password_verify($password, $row["password"]) ) {
          // set session
          $_SESSION['login'] = true;
+         $_SESSION['user_id'] = $row['id'];
          header("Location: backend/dashboard.php");
          exit;
       }

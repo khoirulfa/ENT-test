@@ -11,7 +11,9 @@
          echo "<script>alert('Post baru telah dibuat')</script>";
          echo "<script>document.location.href = 'dashboard.php'</script>?";
       } else {
-         echo "<script>alert('Post baru gagal dibuat'); document.location.href = 'dashboard.php'</script>";
+         // echo "<script>alert('".mysqli_error($connection)."');";
+         // echo "<script>alert('Post baru gagal dibuat'); document.location.href = 'create.php'</script>";
+         echo mysqli_error($connection);
       }
    }
 ?>
@@ -46,7 +48,7 @@
                <?php 
                $categories = mysqli_query($connection, "SELECT * FROM categories");
                foreach ($categories as $category) : ?>
-                  <option value="<?= $category["title"]; ?>"><?= $category["category_title"]; ?></option>
+                  <option value="<?= $category["id"]; ?>"><?= $category["category_title"]; ?></option>
                <?php endforeach; ?>
             </select>
          </div>

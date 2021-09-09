@@ -17,6 +17,7 @@ function query($query) {
 function register($data) {
     global $connection;
 
+    $name = strtolower ($data["name"]);
     $email = strtolower (stripslashes ($data["email"]));
     $password = mysqli_real_escape_string ($connection, $data["password"]);
     $passwordConf = mysqli_real_escape_string ($connection, $data["confPass"]);
@@ -41,7 +42,7 @@ function register($data) {
 
     $password = password_hash ($password, PASSWORD_DEFAULT);
 
-    mysqli_query ($connection, "INSERT INTO users VALUES ('', '$email', '$password')");
+    mysqli_query ($connection, "INSERT INTO users VALUES ('', '$name', '$email', '$password')");
     return mysqli_affected_rows ($connection);
 }
 
@@ -52,6 +53,7 @@ function create($data) {
    $description = htmlspecialchars($data["description"]);
    $body = $data["body"];
    $category = $data["category"];
+   $author = $_SESSION["user_id"];
    $datetime = date("Y-m-d h:i:s");
 
    $img = uploadGambar();
@@ -70,7 +72,7 @@ function create($data) {
     }
 
    mysqli_query($connection, "INSERT INTO posts VALUES 
-        ('', '$title', '$slug', '$description', '$body', '$category', '$img', '$datetime', '')
+        ('', '$title', '$slug', '$description', '$body', '$category', '$author', '$img', '$datetime', '')
     ");
 
    return mysqli_affected_rows($connection);
@@ -83,6 +85,8 @@ function update($data) {
    $slug = slugGenerator($data["title"], 5);
    $description = htmlspecialchars($data["description"]);
    $body = $data["body"];
+   $category = $data["category"];
+   $author = $data["user_id"];
    $datetime = $data["created_at"];
    $updatetime = date("Y-m-d h:i:s");
    $picLama = htmlspecialchars($data["thumbLama"]);
@@ -98,6 +102,8 @@ function update($data) {
     slug = '$slug',
     description = '$description',
     body = '$body',
+    category_id = '$category',
+    user_id = '$author',
     thumbnail = '$pic',
     created_at = '$datetime',
     updated_at = '$updatetime'

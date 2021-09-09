@@ -1,4 +1,9 @@
 <?php 
+session_start();
+if (isset($_SESSION["login"])) {
+   header("Location: index.php");
+   exit;
+}
 require "server/base.php";
 
    if(isset($_POST["register"])) {
@@ -23,6 +28,10 @@ require "server/base.php";
    <div class="container d-flex vh-100 justify-content-center align-items-center">
       <form action="" method="POST" class="col-md-4">
          <img src="assets/logo.png" class="mb-2" height="100" role="img">
+         <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+         </div>
          <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" name="email" required>

@@ -32,6 +32,7 @@
          <input type="hidden" name="id" value="<?= $article["id"]; ?>">
          <input type="hidden" name="created_at" value="<?= $article["created_at"]; ?>">
          <input type="hidden" name="thumbLama" value="<?= $article["thumbnail"]; ?>">
+         <input type="hidden" name="user_id" value="<?= $article["user_id"] ?>">
          <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" name="title" value="<?= $article["title"]; ?>">
@@ -43,6 +44,17 @@
          <div class="mb-3">
             <label class="form-label" for="body">Body</label>
             <textarea name="body" id="" cols="30" rows="10" id="mytextarea" class="form-control"><?= $article["body"]; ?></textarea>
+         </div>
+         <div class="mb-3">
+            <label class="form-label" for="inputGroupSelect01">Category</label>
+            <select class="form-select" id="inputGroupSelect01" name="category">
+               <option selected>Choose...</option>
+               <?php 
+               $categories = mysqli_query($connection, "SELECT * FROM categories");
+               foreach ($categories as $category) : ?>
+                  <option value="<?= $category["id"]; ?>"><?= $category["category_title"]; ?></option>
+               <?php endforeach; ?>
+            </select>
          </div>
          <div class="mb-3">
             <img src="../img/<?= $article['thumbnail']; ?>" alt="" width="70px" class="img-thumbnail">

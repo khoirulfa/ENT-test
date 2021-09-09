@@ -61,7 +61,7 @@ require "../server/base.php";
 					</thead>
 					<tbody>
 						<?php
-						$limit = 10;
+						$limit = 5;
 						$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 						$firstPage = ($page > 1) ? ($page * $limit) : 0;
 
@@ -71,7 +71,7 @@ require "../server/base.php";
 						$counter = mysqli_num_rows(mysqli_query($connection, "SELECT * FROM posts"));
 						$pages = ceil($counter / $limit);
 
-						$articles = query("SELECT post.id, post.title, post.description, categories.category_title FROM posts AS post INNER JOIN categories ON post.category_id = categories.id INNER JOIN users ON post.user_id = users.id WHERE post.id");
+						$articles = query("SELECT post.id, post.title, post.description, categories.category_title FROM posts AS post INNER JOIN categories ON post.category_id = categories.id INNER JOIN users ON post.user_id = users.id WHERE post.id LIMIT " . $firstPage . "," . $limit);
 						$i = $firstPage + 1; 
 
 						if ( isset($_POST["search"]) ) {
